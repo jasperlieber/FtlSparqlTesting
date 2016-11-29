@@ -1,0 +1,49 @@
+# don't understand why no results
+
+PREFIX vcard:      <http://www.w3.org/2001/vcard-rdf/3.0#>
+
+SELECT ?y ?fn ?givenName WHERE {
+	?y  vcard:FN  ?fn   .
+    #?y  vcard:Given  ?givenName
+}
+
+
+
+PREFIX vcard:      <http://www.w3.org/2001/vcard-rdf/3.0#>
+
+SELECT ?y ?fname ?givenName WHERE {
+	OPTIONAL { ?y  vcard:FN  ?fname  } .
+    ?y  vcard:Given  ?givenName
+}
+
+
+# trying to get both fname and givenName
+
+PREFIX vcard:      <http://www.w3.org/2001/vcard-rdf/3.0#>
+
+SELECT ?fname ?givenName WHERE {
+	{ ?y  vcard:FN  ?fname  } UNION
+    { ?y  vcard:Given  ?givenName }
+}
+-------------
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX vCard: <http://www.w3.org/2001/vcard-rdf/3.0#>
+
+SELECT ?name1 ?name2
+WHERE
+{
+   { [] foaf:name ?name1 } UNION { [] vCard:FN ?name2 }
+}
+
+------
+
+# gives FN & Given 
+
+PREFIX vcard:      <http://www.w3.org/2001/vcard-rdf/3.0#>
+
+SELECT ?fullname ?given
+WHERE
+{
+   { [] vcard:FN    ?fullname } UNION 
+   { [] vcard:Given ?given }
+}
